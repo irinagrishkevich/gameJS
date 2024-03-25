@@ -1,4 +1,10 @@
+import {Snake} from "./snake.js";
+
 export class Game{
+    context = null
+    snake = null
+    positionCount = null
+    positionSize = null
     constructor(context, settings){
         this.context = context;
 
@@ -6,13 +12,22 @@ export class Game{
         this.positionSize = settings.positionSize;
 
         document.getElementById('start').onclick = () =>{
+
             this.startGame()
         }
 
     }
 
     startGame(){
+        this.snake = new Snake(this.context, this.positionCount, this.positionSize)
+
+        setInterval(this.gameProcess.bind(this),100)
+    }
+
+    gameProcess(){
+        this.context.clearRect(0,0,this.positionCount*this.positionSize, this.positionCount*this.positionSize)
         this.showGrid()
+        this.snake.showSnake()
     }
     showGrid(){
         const size = this.positionCount* this.positionSize
