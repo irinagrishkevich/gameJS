@@ -2,7 +2,7 @@ export class Snake{
 
     currentDirection = 'right'
     snake = [
-        {x: 10, y: 10},
+        {x: 10, y: 20},
     ]
     context = null
     positionCount = null
@@ -27,7 +27,11 @@ export class Snake{
             }
         })
     }
-    showSnake(){
+    showSnake(foodPosition){
+        let result = {
+            gotFood: false,
+            collision: false,
+        }
         for (let i = 0; i < this.snake.length; i++){
             this.context.fillStyle = 'black'
             this.context.beginPath();
@@ -39,7 +43,13 @@ export class Snake{
             y: this.snake[0].y
         }
 
-        this.snake.pop()
+        if (foodPosition && foodPosition.x === newHeadPosition.x && foodPosition.y === newHeadPosition.y){
+            console.log(foodPosition.x + ' x ' + foodPosition.y + ' y ')
+            console.log(newHeadPosition.x + ' x ' + newHeadPosition.y + ' y ')
+            result.gotFood = true
+        }else{
+            this.snake.pop()
+        }
         if(this.currentDirection === 'left'){
             if (newHeadPosition.x === 1){
                 newHeadPosition.x = this.positionCount
@@ -82,6 +92,24 @@ export class Snake{
 
         }
 
-        this.snake.unshift(newHeadPosition)
+        if (!this.checkNewHeadPositionForCollision(newHeadPosition)){
+            this.snake.unshift(newHeadPosition)
+        } else {
+            result.collision = true
+        }
+
+
+
+        return result
+    }
+
+    checkNewHeadPositionForCollision(newHeadPosition){
+        for (let i = 0; i < this.snake.length; i++){
+            if (newHeadPosition.x === this.snake[i].x && newHeadPosition.y === this.snake[i].y){
+                console.log('err')
+                return true
+            }
+        }
+        return false
     }
 }

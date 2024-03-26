@@ -7,6 +7,7 @@ canvas{
     margin-bottom: 10px;
 }
 .score{
+    position: relative;
     margin-left: 20px;
     font-size: 40px;
 }
@@ -15,4 +16,15 @@ canvas{
     background: blue;
     color: white;
     border: 0;
+}
+.end-game{
+    display: none;
+    position: absolute;
+    top: 80px;
+    width: 600px;
+    height: 600px;
+    background: grey;
+    opacity: 0.6;
+    font-size: 60px;
+    text-align: center;
 }
